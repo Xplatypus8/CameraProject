@@ -1596,8 +1596,13 @@ containing a value of this type.
         public static final int abc_textfield_search_material=0x7f020044;
         public static final int camera=0x7f020045;
         public static final int gutters=0x7f020046;
-        public static final int ic_launcher=0x7f020047;
-        public static final int notification_template_icon_bg=0x7f020048;
+        public static final int ic_action_arrow=0x7f020047;
+        public static final int ic_action_eye=0x7f020048;
+        public static final int ic_action_pencil=0x7f020049;
+        public static final int ic_action_share=0x7f02004a;
+        public static final int ic_action_white_share=0x7f02004b;
+        public static final int ic_launcher=0x7f02004c;
+        public static final int notification_template_icon_bg=0x7f02004d;
     }
     public static final class id {
         public static final int action0=0x7f0c0051;
@@ -1615,10 +1620,11 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0c003e;
         public static final int action_mode_bar_stub=0x7f0c003d;
         public static final int action_mode_close_button=0x7f0c0023;
-        public static final int action_settings=0x7f0c0063;
+        public static final int action_settings=0x7f0c0067;
         public static final int activity_chooser_view_content=0x7f0c0024;
         public static final int alertTitle=0x7f0c0030;
         public static final int always=0x7f0c001b;
+        public static final int arrow=0x7f0c0066;
         public static final int beginning=0x7f0c0018;
         public static final int buttonPanel=0x7f0c002b;
         public static final int cancel_action=0x7f0c0052;
@@ -1636,6 +1642,7 @@ containing a value of this type.
         public static final int end_padder=0x7f0c005d;
         public static final int expand_activities_button=0x7f0c0025;
         public static final int expanded_menu=0x7f0c0038;
+        public static final int eye=0x7f0c0064;
         public static final int home=0x7f0c0004;
         public static final int homeAsUp=0x7f0c000d;
         public static final int icon=0x7f0c0029;
@@ -1654,6 +1661,7 @@ containing a value of this type.
         public static final int none=0x7f0c000e;
         public static final int normal=0x7f0c000a;
         public static final int parentPanel=0x7f0c002d;
+        public static final int pencil=0x7f0c0065;
         public static final int progress_circular=0x7f0c0005;
         public static final int progress_horizontal=0x7f0c0006;
         public static final int radio=0x7f0c003b;
@@ -1677,6 +1685,7 @@ containing a value of this type.
         public static final int seekBarPrefUnitsRight=0x7f0c005e;
         public static final int seekBarPrefValue=0x7f0c005f;
         public static final int select_dialog_listview=0x7f0c004f;
+        public static final int share=0x7f0c0063;
         public static final int shortcut=0x7f0c003a;
         public static final int showCustom=0x7f0c000f;
         public static final int showHome=0x7f0c0010;

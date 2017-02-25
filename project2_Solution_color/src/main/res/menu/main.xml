@@ -2,6 +2,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/share"
+        android:orderInCategory="400"
+        android:icon="@drawable/ic_action_white_share"
+        android:title="share"
+        app:showAsAction ="always"/>
+    <item
+        android:id="@+id/eye"
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_action_eye"
+        android:title="eye"
+        app:showAsAction ="always"/>
+    <item
+        android:id="@+id/pencil"
+        android:orderInCategory="200"
+        android:icon="@drawable/ic_action_pencil"
+        android:title="pencil"
+        app:showAsAction ="always"/>
+    <item
+        android:id="@+id/arrow"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_arrow"
+        android:title="arrow"
+        app:showAsAction ="always"/>
+
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="400"
         android:title="@string/action_settings"
