@@ -2,19 +2,22 @@ package com.example.solution_color;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity  {
 
-    private String imagePath = "";
+    private int numPictures;
+    private String imagePath;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
 
@@ -52,31 +55,31 @@ public class MainActivity extends AppCompatActivity  {
         return true;
     }
 
-    public void reset(MenuItem item){
-        //Camera_Helpers.delSavedImage(imagePath);
-        background.setImageResource(R.drawable. gutters );
-        background.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        background.setScaleType(ImageView.ScaleType.FIT_XY);
+    private void reset(ImageView myImage){
+        Camera_Helpers.delSavedImage(imagePath);
+        myImage.setImageResource(R.drawable. gutters );
+        myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        myImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
     }
 
+    private File createPictureFile() throws IOException{
+        String fileName = "Pic" + numPictures;
+        numPictures++;
+        File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File picture = File.createTempFile(fileName, ".jpg", directory);
 
-    public void dispatchTakePictureIntent(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
-        }
+        imagePath = picture.getAbsolutePath();
+        return picture;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            background.setImageBitmap(imageBitmap);
-        }
+    protected void onActivityResult(int request, int result, Intent data){
+
+
+
     }
+
 
 
 }
