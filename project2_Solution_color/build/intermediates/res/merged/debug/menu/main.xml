@@ -24,6 +24,7 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_arrow"
         android:title="arrow"
+        android:onClick="reset"
         app:showAsAction ="always"/>
 
 

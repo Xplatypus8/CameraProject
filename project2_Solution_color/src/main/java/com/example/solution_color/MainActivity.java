@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity  {
         return true;
     }
 
-    private void reset(ImageView myImage){
-        Camera_Helpers.delSavedImage(imagePath);
-        myImage.setImageResource(R.drawable. gutters );
-        myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        myImage.setScaleType(ImageView.ScaleType.FIT_XY);
+    public void reset(MenuItem item){
+        //Camera_Helpers.delSavedImage(imagePath);
+        background.setImageResource(R.drawable. gutters );
+        background.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        background.setScaleType(ImageView.ScaleType.FIT_XY);
 
     }
 
