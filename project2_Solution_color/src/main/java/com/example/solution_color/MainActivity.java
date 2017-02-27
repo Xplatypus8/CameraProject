@@ -7,14 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity  {
+
+    private String imagePath = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setAlpha((float).5);
+        myToolbar.setAlpha((float).7);
         setSupportActionBar(myToolbar);
 
     }
@@ -41,6 +45,15 @@ public class MainActivity extends AppCompatActivity  {
         }
         return true;
     }
+
+    private void reset(ImageView myImage){
+        Camera_Helpers.delSavedImage(imagePath);
+        myImage.setImageResource(R.drawable. gutters );
+        myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        myImage.setScaleType(ImageView.ScaleType. FIT_XY );
+
+    }
+    
 
 }
 
