@@ -3,6 +3,11 @@ package com.example.solution_color;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,7 +19,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.library.bitmap_utilities.BitMap_Helpers;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +34,12 @@ public class MainActivity extends AppCompatActivity  {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
     private static final int TAKE_PICTURE = 1;
+    private File file;
+    private Uri outputFileUri;
+    private int percentage;
+    private File mainImage;
+    private int screenWidth;
+    private int screenHeight;
 
 
     @Override
@@ -72,6 +87,7 @@ public class MainActivity extends AppCompatActivity  {
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
@@ -83,8 +99,11 @@ public class MainActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                createImageFile();
+                mainImage = createImageFile();
                 Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
+
+
+
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
@@ -112,6 +131,59 @@ public class MainActivity extends AppCompatActivity  {
         imagePath = image.getAbsolutePath();
         return image;
     }
+
+    public void share(MenuItem item){
+        boolean defaultImage = false;
+        try {
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
+            FileOutputStream out = new FileOutputStream(file);
+
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("image/png");
+        Uri uri = null;
+
+        if (!defaultImage) {
+            uri = Uri.fromFile(file);
+        }
+
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        String shareBody = "I made this";
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Look at my doodle!");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(shareIntent, "Share via"));
+    }
+
+
+   /* public void picTest(View view){
+        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
+        outputFileUri = null;
+        outputFileUri = Uri.fromFile(file);
+        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+        startActivityForResult(captureIntent, TAKE_PICTURE);
+
+    }*/
+
+    public void blackAndWhite(MenuItem item){
+        percentage = 50;
+        Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
+        bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
+        Drawable d = new BitmapDrawable(getResources(), bmp);
+        background.setImageDrawable(d);
+
+    }
+
+
+
+
 
 
 }
