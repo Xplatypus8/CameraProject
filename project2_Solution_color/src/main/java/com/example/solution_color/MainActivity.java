@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity  {
 
-    private String imagePath = "storage/emulated/0/pictures/20170226_225401.jpg";
+    private String imagePath = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
     private static final int TAKE_PICTURE = 1;
@@ -83,12 +83,12 @@ public class MainActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
+                createImageFile();
                 Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
                 Camera_Helpers.loadAndScaleImage(imagePath, 100, 100);
-                createImageFile();
                 File file = new File(imagePath);
                 boolean delete = file.delete();
             }
