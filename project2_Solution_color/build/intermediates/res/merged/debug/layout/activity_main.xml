@@ -36,7 +36,8 @@
         android:background="@color/toolbarTransparent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp" />
+        android:layout_marginBottom="43dp"
+        android:onClick="dispatchTakePictureIntent"/>
 
 
 </RelativeLayout>
