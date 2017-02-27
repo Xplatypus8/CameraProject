@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity  {
@@ -55,15 +56,16 @@ public class MainActivity extends AppCompatActivity  {
         Camera_Helpers.delSavedImage(imagePath);
         myImage.setImageResource(R.drawable. gutters );
         myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        myImage.setScaleType(ImageView.ScaleType. FIT_XY );
+        myImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
     }
 
 
-    private void dispatchTakePictureIntent() {
+    public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
         }
     }
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity  {
             background.setImageBitmap(imageBitmap);
         }
     }
-    
+
 
 }
 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CameraProject.iml" filepath="$PROJECT_DIR$/CameraProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/CoolerCamera.iml" filepath="$PROJECT_DIR$/CoolerCamera.iml" />
       <module fileurl="file://$PROJECT_DIR$/bitmap_utilities/bitmap_utilities.iml" filepath="$PROJECT_DIR$/bitmap_utilities/bitmap_utilities.iml" />
       <module fileurl="file://$PROJECT_DIR$/project2_Solution_color/project2_Solution_color.iml" filepath="$PROJECT_DIR$/project2_Solution_color/project2_Solution_color.iml" />
