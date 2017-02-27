@@ -18,7 +18,8 @@
         android:orderInCategory="200"
         android:icon="@drawable/ic_action_pencil"
         android:title="pencil"
-        app:showAsAction ="always"/>
+        app:showAsAction ="always"
+        android:onClick="blackAndWhite"/>
     <item
         android:id="@+id/arrow"
         android:orderInCategory="100"

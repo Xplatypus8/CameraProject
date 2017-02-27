@@ -3,6 +3,10 @@ package com.example.solution_color;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,6 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.library.bitmap_utilities.BitMap_Helpers;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,11 +27,11 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity  {
 
+    private int percentage;
     private String imagePath = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
     private static final int TAKE_PICTURE = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +82,17 @@ public class MainActivity extends AppCompatActivity  {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
+    }
+
+    public void blackAndWhite(MenuItem item){
+        percentage = 50;
+        Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
+        bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
+        Drawable d = new BitmapDrawable(getResources(), bmp);
+        background.setImageDrawable(d);
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -113,6 +128,4 @@ public class MainActivity extends AppCompatActivity  {
         return image;
     }
 
-
 }
-
