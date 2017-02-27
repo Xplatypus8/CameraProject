@@ -4,6 +4,7 @@ package com.example.solution_color;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,12 +12,20 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity  {
 
-    private String imagePath = "";
+    private String imagePath = "storage/emulated/0/pictures/20170226_225401.jpg";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
+    private static final int TAKE_PICTURE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +62,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void reset(MenuItem item){
-        //Camera_Helpers.delSavedImage(imagePath);
+        Camera_Helpers.delSavedImage(imagePath);
         background.setImageResource(R.drawable. gutters );
         background.setScaleType(ImageView.ScaleType.FIT_CENTER);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -67,15 +76,41 @@ public class MainActivity extends AppCompatActivity  {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            background.setImageBitmap(imageBitmap);
+            try {
+                Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                background.setImageBitmap(imageBitmap);
+                Camera_Helpers.loadAndScaleImage(imagePath, 100, 100);
+                createImageFile();
+                File file = new File(imagePath);
+                boolean delete = file.delete();
+            }
+            catch (Exception e){
+
+            }
         }
+    }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        imagePath = image.getAbsolutePath();
+        return image;
     }
 
 
