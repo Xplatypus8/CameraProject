@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private int saturation;
     private int percentage;
-    private boolean isBW;
     private File file;
     private String imagePath = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -54,11 +53,9 @@ public class MainActivity extends AppCompatActivity  {
         background = (ImageView)findViewById(R.id.imageView);
 
 
-
     }
 
-    //private void setSupportActionBar(Toolbar myToolbar) {
-    //}
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,13 +102,14 @@ public class MainActivity extends AppCompatActivity  {
         bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
         Drawable d = new BitmapDrawable(getResources(), bmp);
         background.setImageDrawable(d);
-        isBW = true;
     }
 
     public void colorize(MenuItem item){
         saturation = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("saturation","50"));
         Bitmap tmp = BitMap_Helpers.copyBitmap(background.getDrawable());
+        Bitmap thresh = BitMap_Helpers.thresholdBmp(tmp,saturation);
         Bitmap color = BitMap_Helpers.colorBmp(tmp, saturation);
+        BitMap_Helpers.merge(color,thresh);
         Drawable back = new BitmapDrawable((getResources()), color);
         background.setImageDrawable(back);
 
@@ -121,20 +119,40 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            try {
+
+            try{
                 createImageFile();
+            }
+            catch (IOException e){
+
+            }
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
                 Camera_Helpers.loadAndScaleImage(imagePath, 100, 100);
-                File file = new File(imagePath);
-                boolean delete = file.delete();
-            }
-            catch (Exception e){
 
-            }
         }
     }
+
+
+
+
+    public void share(MenuItem item){
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagePath);
+
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("image/jpg");
+        Uri uri = Uri.fromFile(file);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(shareIntent, "Share image using"));
+        String shareBody = "I made this";
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Picture");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+
+    }
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -149,23 +167,6 @@ public class MainActivity extends AppCompatActivity  {
         // Save a file: path for use with ACTION_VIEW intents
         imagePath = image.getAbsolutePath();
         return image;
-    }
-
-
-    public void share(MenuItem item){
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
-
-
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("image/jpg");
-        Uri uri = Uri.fromFile(file);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(shareIntent, "Share image using"));
-        String shareBody = "I made this";
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Picture");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
 
 
