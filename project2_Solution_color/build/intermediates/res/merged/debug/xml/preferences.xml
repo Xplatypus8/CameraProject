@@ -8,7 +8,8 @@
         android:key="@string/shareTitle"
         android:summary="This is the subject of the message you would like to share"></EditTextPreference>
     <EditTextPreference android:title="Share Text"
-        android:key="@string/sharemessage"
+        android:key="shareMessage"
+        android:defaultValue="I made this."
         android:summary="This is the subject of the message you would like to share"></EditTextPreference>
 
     </PreferenceCategory>

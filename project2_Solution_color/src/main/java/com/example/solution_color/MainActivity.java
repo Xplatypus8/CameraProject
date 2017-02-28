@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.library.bitmap_utilities.BitMap_Helpers;
@@ -139,17 +140,15 @@ public class MainActivity extends AppCompatActivity  {
 
     public void share(MenuItem item){
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagePath);
-
-
+        String phrase = PreferenceManager.getDefaultSharedPreferences(this).getString("shareMessage","I made this.");
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");
         Uri uri = Uri.fromFile(file);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(shareIntent, "Share image using"));
-        String shareBody = "I made this";
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Picture");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, phrase);
 
     }
 
