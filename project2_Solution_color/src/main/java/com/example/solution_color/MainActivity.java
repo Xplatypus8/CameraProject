@@ -31,8 +31,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity{
 
+    private String phrase;
     private int saturation;
     private int percentage;
     private File file;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity  {
         myToolbar.setAlpha((float) .7);
         setSupportActionBar(myToolbar);
         background = (ImageView)findViewById(R.id.imageView);
-
 
     }
 
@@ -98,7 +98,13 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void blackAndWhite(MenuItem item){
-        percentage = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("sketchLevel","50"));
+        percentage = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("sketchLevel", "50"));
+        if(percentage > 100){
+            percentage = 100;
+        }
+        else if(percentage < 0 ){
+            percentage = 0;
+        }
         Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
         bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
         Drawable d = new BitmapDrawable(getResources(), bmp);
@@ -107,8 +113,15 @@ public class MainActivity extends AppCompatActivity  {
 
     public void colorize(MenuItem item){
         saturation = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("saturation","50"));
+        if(saturation > 255){
+            saturation = 255;
+        }
+        else if(saturation < 0 ){
+            saturation = 0;
+        }
+
         Bitmap tmp = BitMap_Helpers.copyBitmap(background.getDrawable());
-        Bitmap thresh = BitMap_Helpers.thresholdBmp(tmp,saturation);
+        Bitmap thresh = BitMap_Helpers.thresholdBmp(tmp, saturation);
         Bitmap color = BitMap_Helpers.colorBmp(tmp, saturation);
         BitMap_Helpers.merge(color,thresh);
         Drawable back = new BitmapDrawable((getResources()), color);
@@ -139,16 +152,20 @@ public class MainActivity extends AppCompatActivity  {
 
 
     public void share(MenuItem item){
+
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagePath);
-        String phrase = PreferenceManager.getDefaultSharedPreferences(this).getString("shareMessage","I made this.");
+        phrase = PreferenceManager.getDefaultSharedPreferences(this).getString("shareMessage","I made this.");
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");
         Uri uri = Uri.fromFile(file);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(shareIntent, "Share image using"));
+
+
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Picture");
         shareIntent.putExtra(Intent.EXTRA_TEXT, phrase);
+        startActivity(shareIntent);
+
 
     }
 
