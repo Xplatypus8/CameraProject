@@ -5,7 +5,7 @@
         android:title="@string/shareOptions">
 
     <EditTextPreference android:title="Share Subject"
-        android:key="@string/shareTitle"
+        android:key="shareTitle"
         android:summary="This is the subject of the message you would like to share"></EditTextPreference>
     <EditTextPreference android:title="Share Text"
         android:key="shareMessage"
