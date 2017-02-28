@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity  {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 createImageFile();
-                Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
@@ -153,7 +152,8 @@ public class MainActivity extends AppCompatActivity  {
     public void share(MenuItem item){
         boolean defaultImage = false;
         try {
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagePath);
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
+            Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
             FileOutputStream out = new FileOutputStream(file);
 
             out.close();
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity  {
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("image/png");
+        shareIntent.setType("image/jpg");
         Uri uri = null;
 
         if (!defaultImage) {
