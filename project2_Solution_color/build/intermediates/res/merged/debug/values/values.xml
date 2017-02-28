@@ -222,6 +222,8 @@
     <string name="inline_preferences">In-line preferences</string>
     <string name="launch_preferences">Launch preferences</string>
     <string name="preference_attributes">Preference attributes</string>
+    <string name="renderingOptions">Rendering Options</string>
+    <string name="shareOptions">Share Options</string>
     <string name="shareTitle">An image for you</string>
     <string name="sharemessage">Something to cherish, enjoy!</string>
     <string name="status_bar_notification_info_overflow">999+</string>

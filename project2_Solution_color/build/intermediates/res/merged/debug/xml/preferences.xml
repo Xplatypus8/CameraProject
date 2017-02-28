@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <EditTextPreference android:title="Your Name"
-        android:key="username"
-        android:summary="Please provide your username"></EditTextPreference>
-    <CheckBoxPreference android:title="Sample Checkbox Pref"
-        android:defaultValue="false"
-        android:summary="Longwinded explanation goes here"
-        android:key="applicationUpdates" />
-    
+
+    <PreferenceCategory
+        android:title="@string/shareOptions">
+
+    <EditTextPreference android:title="Share Subject"
+        android:key="@string/shareTitle"
+        android:summary="This is the subject of the message you would like to share"></EditTextPreference>
+    <EditTextPreference android:title="Share Text"
+        android:key="@string/sharemessage"
+        android:summary="This is the subject of the message you would like to share"></EditTextPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/renderingOptions">
+
+
+        </PreferenceCategory>
+
 </PreferenceScreen>
