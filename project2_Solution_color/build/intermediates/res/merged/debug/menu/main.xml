@@ -13,7 +13,8 @@
         android:orderInCategory="300"
         android:icon="@drawable/ic_action_eye"
         android:title="eye"
-        app:showAsAction ="always"/>
+        app:showAsAction ="always"
+        android:onClick="colorize"/>
     <item
         android:id="@+id/pencil"
         android:orderInCategory="200"

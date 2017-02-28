@@ -2,11 +2,12 @@ package com.example.solution_color;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import com.library.bitmap_utilities.BitMap_Helpers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,20 +30,19 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity  {
 
+    private int saturation;
+    private int percentage;
+    private boolean isBW;
+    private File file;
+    private Bitmap pic;
     private String imagePath = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
     private static final int TAKE_PICTURE = 1;
-    private File file;
-    private Uri outputFileUri;
-    private int percentage;
-    private File mainImage;
-    private int screenWidth;
-    private int screenHeight;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -87,26 +86,44 @@ public class MainActivity extends AppCompatActivity  {
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
+    }
+
+    public void blackAndWhite(MenuItem item){
+        percentage = 50;
+        Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
+        bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
+        Drawable d = new BitmapDrawable(getResources(), bmp);
+        background.setImageDrawable(d);
+        isBW = true;
+    }
+
+    public void colorize(MenuItem item){
+        saturation = 100;
+        Bitmap tmp = BitMap_Helpers.copyBitmap(background.getDrawable());
+        Bitmap color = BitMap_Helpers.colorBmp(tmp, saturation);
+        if(isBW){
+           BitMap_Helpers.merge(color, tmp);
+        }
+        Drawable back = new BitmapDrawable((getResources()), color);
+        background.setImageDrawable(back);
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                mainImage = createImageFile();
+                createImageFile();
                 Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
-
-
-
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
+                pic = imageBitmap;
                 Camera_Helpers.loadAndScaleImage(imagePath, 100, 100);
                 File file = new File(imagePath);
                 boolean delete = file.delete();
@@ -132,10 +149,11 @@ public class MainActivity extends AppCompatActivity  {
         return image;
     }
 
+
     public void share(MenuItem item){
         boolean defaultImage = false;
         try {
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagePath);
             FileOutputStream out = new FileOutputStream(file);
 
             out.close();
@@ -155,6 +173,8 @@ public class MainActivity extends AppCompatActivity  {
 
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
+        startActivity(Intent.createChooser(shareIntent, "Share image using"));
+
         String shareBody = "I made this";
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Look at my doodle!");
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
@@ -162,29 +182,5 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-   /* public void picTest(View view){
-        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
-        outputFileUri = null;
-        outputFileUri = Uri.fromFile(file);
-        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        startActivityForResult(captureIntent, TAKE_PICTURE);
-
-    }*/
-
-    public void blackAndWhite(MenuItem item){
-        percentage = 50;
-        Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
-        bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
-        Drawable d = new BitmapDrawable(getResources(), bmp);
-        background.setImageDrawable(d);
-
-    }
-
-
-
-
-
 
 }
-
