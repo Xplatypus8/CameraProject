@@ -1764,6 +1764,7 @@ containing a value of this type.
         public static final int main=0x7f0d0000;
     }
     public static final class string {
+        public static final int CustomizeOptions=0x7f060014;
         public static final int abc_action_bar_home_description=0x7f060000;
         public static final int abc_action_bar_home_description_format=0x7f060001;
         public static final int abc_action_bar_home_subtitle_description_format=0x7f060002;
@@ -1783,43 +1784,43 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with=0x7f060010;
         public static final int abc_shareactionprovider_share_with_application=0x7f060011;
         public static final int abc_toolbar_collapse_description=0x7f060012;
-        public static final int action_settings=0x7f060014;
-        public static final int app_name=0x7f060015;
-        public static final int dialog_based_preferences=0x7f060016;
-        public static final int dialog_title_edittext_preference=0x7f060017;
-        public static final int dialog_title_list_preference=0x7f060018;
-        public static final int hello_world=0x7f060019;
-        public static final int inline_preferences=0x7f06001a;
-        public static final int launch_preferences=0x7f06001b;
-        public static final int preference_attributes=0x7f06001c;
-        public static final int renderingOptions=0x7f06001d;
-        public static final int shareOptions=0x7f06001e;
-        public static final int shareTitle=0x7f06001f;
-        public static final int sharemessage=0x7f060020;
+        public static final int action_settings=0x7f060015;
+        public static final int app_name=0x7f060016;
+        public static final int dialog_based_preferences=0x7f060017;
+        public static final int dialog_title_edittext_preference=0x7f060018;
+        public static final int dialog_title_list_preference=0x7f060019;
+        public static final int hello_world=0x7f06001a;
+        public static final int inline_preferences=0x7f06001b;
+        public static final int launch_preferences=0x7f06001c;
+        public static final int preference_attributes=0x7f06001d;
+        public static final int renderingOptions=0x7f06001e;
+        public static final int shareOptions=0x7f06001f;
+        public static final int shareTitle=0x7f060020;
+        public static final int sharemessage=0x7f060021;
         public static final int status_bar_notification_info_overflow=0x7f060013;
-        public static final int summary_checkbox_preference=0x7f060021;
-        public static final int summary_child_preference=0x7f060022;
-        public static final int summary_edittext_preference=0x7f060023;
-        public static final int summary_fragment_preference=0x7f060024;
-        public static final int summary_intent_preference=0x7f060025;
-        public static final int summary_list_preference=0x7f060026;
-        public static final int summary_my_preference=0x7f060027;
-        public static final int summary_next_screen_toggle_preference=0x7f060028;
-        public static final int summary_off_advanced_toggle_preference=0x7f060029;
-        public static final int summary_on_advanced_toggle_preference=0x7f06002a;
-        public static final int summary_parent_preference=0x7f06002b;
-        public static final int summary_screen_preference=0x7f06002c;
-        public static final int title_advanced_toggle_preference=0x7f06002d;
-        public static final int title_checkbox_preference=0x7f06002e;
-        public static final int title_child_preference=0x7f06002f;
-        public static final int title_edittext_preference=0x7f060030;
-        public static final int title_fragment_preference=0x7f060031;
-        public static final int title_intent_preference=0x7f060032;
-        public static final int title_list_preference=0x7f060033;
-        public static final int title_my_preference=0x7f060034;
-        public static final int title_next_screen_toggle_preference=0x7f060035;
-        public static final int title_parent_preference=0x7f060036;
-        public static final int title_screen_preference=0x7f060037;
+        public static final int summary_checkbox_preference=0x7f060022;
+        public static final int summary_child_preference=0x7f060023;
+        public static final int summary_edittext_preference=0x7f060024;
+        public static final int summary_fragment_preference=0x7f060025;
+        public static final int summary_intent_preference=0x7f060026;
+        public static final int summary_list_preference=0x7f060027;
+        public static final int summary_my_preference=0x7f060028;
+        public static final int summary_next_screen_toggle_preference=0x7f060029;
+        public static final int summary_off_advanced_toggle_preference=0x7f06002a;
+        public static final int summary_on_advanced_toggle_preference=0x7f06002b;
+        public static final int summary_parent_preference=0x7f06002c;
+        public static final int summary_screen_preference=0x7f06002d;
+        public static final int title_advanced_toggle_preference=0x7f06002e;
+        public static final int title_checkbox_preference=0x7f06002f;
+        public static final int title_child_preference=0x7f060030;
+        public static final int title_edittext_preference=0x7f060031;
+        public static final int title_fragment_preference=0x7f060032;
+        public static final int title_intent_preference=0x7f060033;
+        public static final int title_list_preference=0x7f060034;
+        public static final int title_my_preference=0x7f060035;
+        public static final int title_next_screen_toggle_preference=0x7f060036;
+        public static final int title_parent_preference=0x7f060037;
+        public static final int title_screen_preference=0x7f060038;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007e;
@@ -1828,11 +1829,6 @@ containing a value of this type.
         public static final int Animation_AppCompat_DropDownUp=0x7f090081;
         /**  API 11 theme customizations can go here. 
  API 14 theme customizations can go here. 
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
          */
         public static final int AppBaseTheme=0x7f090004;
         public static final int AppTheme=0x7f090082;

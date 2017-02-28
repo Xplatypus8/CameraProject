@@ -37,5 +37,6 @@
     <string name="shareTitle">An image for you</string>
     <string name="shareOptions">Share Options</string>
     <string name="renderingOptions">Rendering Options</string>
+    <string name="CustomizeOptions">Customize Image</string>
 
 </resources>

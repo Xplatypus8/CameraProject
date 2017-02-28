@@ -2,6 +2,7 @@ package com.example.solution_color;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,7 +20,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import com.library.bitmap_utilities.BitMap_Helpers;
 
@@ -34,21 +36,24 @@ public class MainActivity extends AppCompatActivity  {
     private int percentage;
     private boolean isBW;
     private File file;
-    private Bitmap pic;
     private String imagePath = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView background;
-    private static final int TAKE_PICTURE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setAlpha((float).7);
+        myToolbar.setAlpha((float) .7);
         setSupportActionBar(myToolbar);
         background = (ImageView)findViewById(R.id.imageView);
+
+
 
     }
 
@@ -76,6 +81,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void reset(MenuItem item){
+
+
         Camera_Helpers.delSavedImage(imagePath);
         background.setImageResource(R.drawable. gutters );
         background.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void blackAndWhite(MenuItem item){
-        percentage = 50;
+        percentage = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("sketchLevel","50"));
         Bitmap bmp = BitMap_Helpers.copyBitmap(background.getDrawable());
         bmp = BitMap_Helpers.thresholdBmp(bmp, percentage);
         Drawable d = new BitmapDrawable(getResources(), bmp);
@@ -102,12 +109,9 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void colorize(MenuItem item){
-        saturation = 100;
+        saturation = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("saturation","50"));
         Bitmap tmp = BitMap_Helpers.copyBitmap(background.getDrawable());
         Bitmap color = BitMap_Helpers.colorBmp(tmp, saturation);
-        if(isBW){
-           BitMap_Helpers.merge(color, tmp);
-        }
         Drawable back = new BitmapDrawable((getResources()), color);
         background.setImageDrawable(back);
 
@@ -122,7 +126,6 @@ public class MainActivity extends AppCompatActivity  {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 background.setImageBitmap(imageBitmap);
-                pic = imageBitmap;
                 Camera_Helpers.loadAndScaleImage(imagePath, 100, 100);
                 File file = new File(imagePath);
                 boolean delete = file.delete();
@@ -150,33 +153,17 @@ public class MainActivity extends AppCompatActivity  {
 
 
     public void share(MenuItem item){
-        boolean defaultImage = false;
-        try {
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
-            Toast.makeText(this, imagePath, Toast.LENGTH_SHORT).show();
-            FileOutputStream out = new FileOutputStream(file);
-
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "temp.jpg");
 
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");
-        Uri uri = null;
-
-        if (!defaultImage) {
-            uri = Uri.fromFile(file);
-        }
-
+        Uri uri = Uri.fromFile(file);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-
         startActivity(Intent.createChooser(shareIntent, "Share image using"));
-
         String shareBody = "I made this";
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Look at my doodle!");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Picture");
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }

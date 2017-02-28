@@ -16,6 +16,25 @@
     <PreferenceCategory
         android:title="@string/renderingOptions">
 
+            <EditTextPreference
+                android:title= "Sketchiness"
+                android:key="sketchLevel"
+                android:defaultValue="50"
+                android:summary="Customize the level of sketchiness. Enter a value between 0 and 100"
+                android:inputType = "number">
+
+            </EditTextPreference>
+
+        <EditTextPreference
+            android:title= "Saturation"
+            android:key="saturation"
+            android:defaultValue="50"
+            android:summary="Customize the level of Saturation. Enter a value between 0 and 255"
+            android:inputType = "number">
+
+        </EditTextPreference>
+
+
 
         </PreferenceCategory>
 
